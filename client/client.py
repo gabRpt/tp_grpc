@@ -38,14 +38,15 @@ def run():
         stub = booking_pb2_grpc.BookingStub(channel)
         
         # print("-------------- GetListBookings --------------")
-        # empty = booking_pb2.Empty()
+        # empty = booking_pb2.EmptyMessage()
         # get_list_bookings(stub,empty)
 
         # print("-------------- GetListBookingsFromUser --------------")
-        # userid = booking_pb2.UserId(userid = "dwight_schrute")
-        # get_list_bookings_from_user(stub,userid)
-        empty = booking_pb2.Empty()
-        booking_pb2.AddBooking(empty)
+        userid = booking_pb2.UserId(userid = "dwight_schrute")
+        get_list_bookings_from_user(stub,userid)
+        print("=====================================================")
+        empty = booking_pb2.EmptyMessage()
+        val = stub.AddBooking(empty)
   
 def get_movie_by_id(stub,id):
     movie = stub.GetMovieByID(id)
@@ -63,6 +64,7 @@ def get_list_movies_schedule(stub,empty):
         print("Date ", schedule.date)
         for movie in schedule.movies:
             print("    - ", movie)
+            
         print("--------------------------------")
 
 #Booking

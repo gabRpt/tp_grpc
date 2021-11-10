@@ -4,8 +4,8 @@ from concurrent import futures
 import booking_pb2
 import booking_pb2_grpc
 
-from movie_grpc.showtime.showtime_pb2_grpc import *
-from movie_grpc.showtime.showtime_pb2 import *
+import showtime_pb2
+import showtime_pb2_grpc
 
 class BookingServicer(booking_pb2_grpc.BookingServicer):
     def __init__(self):
@@ -34,11 +34,14 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
         
         
     def AddBooking(self, request, context):
-        with grpc.insecure_channel('localhost:3001') as channel:
-            stub = ShowtimeStub(channel)
-            date = Date(date = "20151130")            
+        with grpc.insecure_channel('localhost:3002') as channel:
+            stub = showtime_pb2_grpc.ShowtimeStub(channel)
+            date = showtime_pb2.Date(date = "20151130")
+            print("--1--")
             dates = stub.GetMovieByDate(date)
+            print("--2--")
             print(dates)
+            return booking_pb2.AddBookingReturnMessage(message = "Yes")
             
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

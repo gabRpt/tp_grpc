@@ -26,7 +26,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     showtime_pb2_grpc.add_ShowtimeServicer_to_server(ShowtimeServicer(), server)
-    server.add_insecure_port('[::]:3001')
+    server.add_insecure_port('[::]:3002')
     server.start()
     server.wait_for_termination()
 

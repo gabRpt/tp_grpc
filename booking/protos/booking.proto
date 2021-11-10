@@ -1,12 +1,12 @@
 syntax = "proto3";
 
 service Booking {
-  rpc GetListBookings (Empty) returns (stream Book);
+  rpc GetListBookings (EmptyMessage) returns (stream Book);
   rpc GetListBookingsFromUser (UserId) returns (stream Book);
-  rpc AddBooking (Empty) returns (AddBookingReturnMessage);
+  rpc AddBooking (EmptyMessage) returns (AddBookingReturnMessage);
 }
 
-message Empty{}
+message EmptyMessage{}
 
 message Book {
   message Dates{

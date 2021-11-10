@@ -19,15 +19,15 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rbooking.proto\"\x07\n\x05\x45mpty\"Y\n\x04\x42ook\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x1a\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\x0b.Book.Dates\x1a%\n\x05\x44\x61tes\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\x18\n\x06UserId\x12\x0e\n\x06userid\x18\x01 \x01(\t\"*\n\x17\x41\x64\x64\x42ookingReturnMessage\x12\x0f\n\x07message\x18\x01 \x01(\t2\x89\x01\n\x07\x42ooking\x12\"\n\x0fGetListBookings\x12\x06.Empty\x1a\x05.Book0\x01\x12+\n\x17GetListBookingsFromUser\x12\x07.UserId\x1a\x05.Book0\x01\x12-\n\nAddBooking\x12\x05.Book\x1a\x18.AddBookingReturnMessageb\x06proto3'
+  serialized_pb=b'\n\rbooking.proto\"\x0e\n\x0c\x45mptyMessage\"Y\n\x04\x42ook\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x1a\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\x0b.Book.Dates\x1a%\n\x05\x44\x61tes\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\x18\n\x06UserId\x12\x0e\n\x06userid\x18\x01 \x01(\t\"*\n\x17\x41\x64\x64\x42ookingReturnMessage\x12\x0f\n\x07message\x18\x01 \x01(\t2\x98\x01\n\x07\x42ooking\x12)\n\x0fGetListBookings\x12\r.EmptyMessage\x1a\x05.Book0\x01\x12+\n\x17GetListBookingsFromUser\x12\x07.UserId\x1a\x05.Book0\x01\x12\x35\n\nAddBooking\x12\r.EmptyMessage\x1a\x18.AddBookingReturnMessageb\x06proto3'
 )
 
 
 
 
-_EMPTY = _descriptor.Descriptor(
-  name='Empty',
-  full_name='Empty',
+_EMPTYMESSAGE = _descriptor.Descriptor(
+  name='EmptyMessage',
+  full_name='EmptyMessage',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -46,7 +46,7 @@ _EMPTY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=17,
-  serialized_end=24,
+  serialized_end=31,
 )
 
 
@@ -84,8 +84,8 @@ _BOOK_DATES = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=78,
-  serialized_end=115,
+  serialized_start=85,
+  serialized_end=122,
 )
 
 _BOOK = _descriptor.Descriptor(
@@ -122,8 +122,8 @@ _BOOK = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=26,
-  serialized_end=115,
+  serialized_start=33,
+  serialized_end=122,
 )
 
 
@@ -154,8 +154,8 @@ _USERID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=117,
-  serialized_end=141,
+  serialized_start=124,
+  serialized_end=148,
 )
 
 
@@ -186,24 +186,24 @@ _ADDBOOKINGRETURNMESSAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=143,
-  serialized_end=185,
+  serialized_start=150,
+  serialized_end=192,
 )
 
 _BOOK_DATES.containing_type = _BOOK
 _BOOK.fields_by_name['dates'].message_type = _BOOK_DATES
-DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['EmptyMessage'] = _EMPTYMESSAGE
 DESCRIPTOR.message_types_by_name['Book'] = _BOOK
 DESCRIPTOR.message_types_by_name['UserId'] = _USERID
 DESCRIPTOR.message_types_by_name['AddBookingReturnMessage'] = _ADDBOOKINGRETURNMESSAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
-  'DESCRIPTOR' : _EMPTY,
+EmptyMessage = _reflection.GeneratedProtocolMessageType('EmptyMessage', (_message.Message,), {
+  'DESCRIPTOR' : _EMPTYMESSAGE,
   '__module__' : 'booking_pb2'
-  # @@protoc_insertion_point(class_scope:Empty)
+  # @@protoc_insertion_point(class_scope:EmptyMessage)
   })
-_sym_db.RegisterMessage(Empty)
+_sym_db.RegisterMessage(EmptyMessage)
 
 Book = _reflection.GeneratedProtocolMessageType('Book', (_message.Message,), {
 
@@ -243,15 +243,15 @@ _BOOKING = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=188,
-  serialized_end=325,
+  serialized_start=195,
+  serialized_end=347,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetListBookings',
     full_name='Booking.GetListBookings',
     index=0,
     containing_service=None,
-    input_type=_EMPTY,
+    input_type=_EMPTYMESSAGE,
     output_type=_BOOK,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -271,7 +271,7 @@ _BOOKING = _descriptor.ServiceDescriptor(
     full_name='Booking.AddBooking',
     index=2,
     containing_service=None,
-    input_type=_BOOK,
+    input_type=_EMPTYMESSAGE,
     output_type=_ADDBOOKINGRETURNMESSAGE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
