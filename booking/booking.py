@@ -12,7 +12,7 @@ ADD_BOOKING_ALREADY_ADDED_MESSAGE = "Movie already added"
 ADD_BOOKING_MOVIE_NOT_SCREENED_MESSAGE = "Movie not available on the specified date"
 
 CREATE_SHOWTIME_CHANNEL_URI = 'localhost:3002'
-BOOKING_URI = '[::]:3001'
+BOOKING_URI = '[::]:3003'
 BOOKING_DATABASE_PATH = '{}/databases/bookings.json'
 
 
