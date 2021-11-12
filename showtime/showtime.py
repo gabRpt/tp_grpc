@@ -14,7 +14,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
             if schedule['date'] == request.date:
                 print("Date found!")
                 return showtime_pb2.Movies(movies=schedule['movies'])
-        return showtime_pb2.Movies(movies=[""])
+        return showtime_pb2.Movies(movies=None)
     
     def GetListTimes(self, request, context):
         for schedule in self.db:

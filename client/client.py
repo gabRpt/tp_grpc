@@ -1,4 +1,5 @@
 import grpc
+import time
 # import movie_pb2
 # import movie_pb2_grpc
 
@@ -42,11 +43,23 @@ def run():
         # get_list_bookings(stub,empty)
 
         # print("-------------- GetListBookingsFromUser --------------")
-        userid = booking_pb2.UserId(userid = "dwight_schrute")
+        # userid = booking_pb2.UserId(userid = "dwight_schrute")
+        # get_list_bookings_from_user(stub,userid)
+        
+        print("---------------BEGIN-----------------")
+        userid = booking_pb2.UserId(userid = "chris_riverss")
         get_list_bookings_from_user(stub,userid)
-        print("=====================================================")
-        empty = booking_pb2.EmptyMessage()
-        val = stub.AddBooking(empty)
+        
+        print("--------------------------------")        
+        reservation = booking_pb2.Reservation(
+            userid = "chris_riverss",
+            movie = "7daf7208-be4d-4944-a3ae-c1c2f516f3e6",
+            date = "20151204"
+        )
+        print(stub.AddBooking(reservation))
+        
+        get_list_bookings_from_user(stub,userid)
+        print("----------------END----------------")
   
 def get_movie_by_id(stub,id):
     movie = stub.GetMovieByID(id)
