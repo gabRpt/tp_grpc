@@ -2,14 +2,14 @@ import grpc
 # import movie_pb2
 # import movie_pb2_grpc
 
-# import showtime_pb2
-# import showtime_pb2_grpc
+import showtime_pb2
+import showtime_pb2_grpc
 
 import booking_pb2
 import booking_pb2_grpc
 
 def run():
-    with grpc.insecure_channel('localhost:3001') as channel:
+    with grpc.insecure_channel('localhost:3002') as channel:
         
         # ======================= MOVIE =====================
         # stub = movie_pb2_grpc.MovieStub(channel)
@@ -20,33 +20,33 @@ def run():
         
         
         
-        # ======================= SHOWTIME =====================
-        # stub = showtime_pb2_grpc.ShowtimeStub(channel)
+        #======================= SHOWTIME =====================
+        stub = showtime_pb2_grpc.ShowtimeStub(channel)
 
-        # print("-------------- GetMovieFromShowtimeByDate --------------")
-        # date = showtime_pb2.Date(date = "20151130")
-        # get_movie_by_date_from_showtime(stub, date)
+        print("-------------- GetMovieFromShowtimeByDate --------------")
+        date = showtime_pb2.Date(date = "20151130")
+        get_movie_by_date_from_showtime(stub, date)
         
         
-        # print("-------------- GetMovieFromShowtimeByDate --------------")
-        # empty = showtime_pb2.Empty()
-        # get_list_movies_schedule(stub, empty)
+        print("-------------- GetMovieFromShowtimeByDate --------------")
+        empty = showtime_pb2.Empty()
+        get_list_movies_schedule(stub, empty)
         
         
         
         # ======================= BOOKINGS =====================
-        stub = booking_pb2_grpc.BookingStub(channel)
+        #stub = booking_pb2_grpc.BookingStub(channel)
         
         # print("-------------- GetListBookings --------------")
         # empty = booking_pb2.EmptyMessage()
         # get_list_bookings(stub,empty)
 
         # print("-------------- GetListBookingsFromUser --------------")
-        userid = booking_pb2.UserId(userid = "dwight_schrute")
-        get_list_bookings_from_user(stub,userid)
-        print("=====================================================")
-        empty = booking_pb2.EmptyMessage()
-        val = stub.AddBooking(empty)
+        #userid = booking_pb2.UserId(userid = "dwight_schrute")
+#         get_list_bookings_from_user(stub,userid)
+#         print("=====================================================")
+#         empty = booking_pb2.EmptyMessage()
+#         val = stub.AddBooking(empty)
   
 def get_movie_by_id(stub,id):
     movie = stub.GetMovieByID(id)
