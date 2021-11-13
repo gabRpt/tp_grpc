@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0eshowtime.proto\"\x14\n\x04\x44\x61te\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\"\x18\n\x06Movies\x12\x0e\n\x06movies\x18\x01 \x03(\t\"/\n\x0fMoviesSchedules\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\x07\n\x05\x45mpty2Z\n\x08Showtime\x12,\n\x0cGetListTimes\x12\x06.Empty\x1a\x10.MoviesSchedules\"\x00\x30\x01\x12 \n\x0eGetMovieByDate\x12\x05.Date\x1a\x07.Moviesb\x06proto3'
+  serialized_pb=b'\n\x0eshowtime.proto\"\x14\n\x04\x44\x61te\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\"\x18\n\x06Movies\x12\x0e\n\x06movies\x18\x01 \x03(\t\"/\n\x0fMoviesSchedules\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\n\n\x08\x45mptyMsg2]\n\x08Showtime\x12/\n\x0cGetListTimes\x12\t.EmptyMsg\x1a\x10.MoviesSchedules\"\x00\x30\x01\x12 \n\x0eGetMovieByDate\x12\x05.Date\x1a\x07.Moviesb\x06proto3'
 )
 
 
@@ -128,9 +128,9 @@ _MOVIESSCHEDULES = _descriptor.Descriptor(
 )
 
 
-_EMPTY = _descriptor.Descriptor(
-  name='Empty',
-  full_name='Empty',
+_EMPTYMSG = _descriptor.Descriptor(
+  name='EmptyMsg',
+  full_name='EmptyMsg',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
@@ -149,13 +149,13 @@ _EMPTY = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=115,
-  serialized_end=122,
+  serialized_end=125,
 )
 
 DESCRIPTOR.message_types_by_name['Date'] = _DATE
 DESCRIPTOR.message_types_by_name['Movies'] = _MOVIES
 DESCRIPTOR.message_types_by_name['MoviesSchedules'] = _MOVIESSCHEDULES
-DESCRIPTOR.message_types_by_name['Empty'] = _EMPTY
+DESCRIPTOR.message_types_by_name['EmptyMsg'] = _EMPTYMSG
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Date = _reflection.GeneratedProtocolMessageType('Date', (_message.Message,), {
@@ -179,12 +179,12 @@ MoviesSchedules = _reflection.GeneratedProtocolMessageType('MoviesSchedules', (_
   })
 _sym_db.RegisterMessage(MoviesSchedules)
 
-Empty = _reflection.GeneratedProtocolMessageType('Empty', (_message.Message,), {
-  'DESCRIPTOR' : _EMPTY,
+EmptyMsg = _reflection.GeneratedProtocolMessageType('EmptyMsg', (_message.Message,), {
+  'DESCRIPTOR' : _EMPTYMSG,
   '__module__' : 'showtime_pb2'
-  # @@protoc_insertion_point(class_scope:Empty)
+  # @@protoc_insertion_point(class_scope:EmptyMsg)
   })
-_sym_db.RegisterMessage(Empty)
+_sym_db.RegisterMessage(EmptyMsg)
 
 
 
@@ -195,15 +195,15 @@ _SHOWTIME = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=124,
-  serialized_end=214,
+  serialized_start=127,
+  serialized_end=220,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetListTimes',
     full_name='Showtime.GetListTimes',
     index=0,
     containing_service=None,
-    input_type=_EMPTY,
+    input_type=_EMPTYMSG,
     output_type=_MOVIESSCHEDULES,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,

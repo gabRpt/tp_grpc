@@ -1,9 +1,12 @@
 syntax = "proto3";
 
 service Showtime {
-  rpc GetListTimes(Empty) returns (stream MoviesSchedules) {};
+  // Get all Times of broadcast of movies from database
+  rpc GetListTimes(EmptyMsg) returns (stream MoviesSchedules) {};
+  // Get a Movie by its broadcast date
   rpc GetMovieByDate (Date) returns (Movies);
 }
+
 message Date {
   string date = 1;
 }
@@ -17,5 +20,5 @@ message MoviesSchedules {
   repeated string movies = 2;
 }
 
-message Empty {
+message EmptyMsg {
 }

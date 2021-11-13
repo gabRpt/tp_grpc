@@ -15,6 +15,9 @@ CREATE_SHOWTIME_CHANNEL_URI = 'localhost:3002'
 BOOKING_URI = '[::]:3003'
 BOOKING_DATABASE_PATH = '{}/databases/bookings.json'
 
+STATUS_CODE_SUCCESS = 200
+STATUS_CODE_ERROR = 400
+
 
 class BookingServicer(booking_pb2_grpc.BookingServicer):
     def __init__(self):
@@ -35,52 +38,67 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
                     userid = book["userid"],
                     dates = book["dates"]
                 )
-                
+        
+        #Empty if nothing found
         return booking_pb2.Book(
                     userid = "",
                     dates = ""
                 )
         
     def AddBooking(self, request, context):
-        # Création de la connexion et du stub
+        # Creating the connection and stub
         with grpc.insecure_channel(CREATE_SHOWTIME_CHANNEL_URI) as channel:
             stubShowtime = showtime_pb2_grpc.ShowtimeStub(channel)
             
-            # Récupération des films disponible à la date transmise
+            # Recovery of films available on the date transmitted
             date = showtime_pb2.Date(date = request.date)
             movies = stubShowtime.GetMovieByDate(date)
-            
-            # Variables            
+                       
             currentBookingDates = []
             movieIsScreened = False
+            
+            # To add a movie to the database, we need to check the following:
+            # 1. If the movie is screened on the date transmitted
+            # 2. If the user has already reserved the movie on the date transmitted
+            # 3. If the user exists in booking's database, 
+            #       if yes, we need to check if he has reserved any other movie at the date transmitted
+            #           if yes we add the movie to the database at the specified date
+            #           if not we create the date and add the movie
+            #       if not we need to create the user and add the movie w/ the date
             
             for movie in movies.movies:
                 if movie == request.movie:
                     movieIsScreened = True
                     break
-
+                
             if movieIsScreened:
-                # Le film est projeté à la date transmise
+                # The film is screened on the date transmitted
                 for book in self.db:
                     if book["userid"] == request.userid:
                         currentBookingDates = book["dates"]
                 
                 if currentBookingDates:
-                    #L'utilisateur existe dans la BD
+                    #The user exists in the database
                                         
                     for bookDate in currentBookingDates:
                         if bookDate["date"] == request.date:
-                            # L'utilisateur à déjà réservé un film à la date transmise
+                            # The user has already reserved a film on the date transmitted
                             for movie in bookDate["movies"]:
                                 if movie == request.movie:
-                                    # L'utilisateur à déjà réservé le film à cette date
-                                    return booking_pb2.AddBookingReturnMessage(message = ADD_BOOKING_ALREADY_ADDED_MESSAGE)
+                                    # The user has already booked the film on this date
+                                    return booking_pb2.AddBookingReturnMessage(
+                                            code = STATUS_CODE_ERROR,
+                                            message = ADD_BOOKING_ALREADY_ADDED_MESSAGE
+                                        )
 
-                            # Ajouter le film
-                            print("Ajout du film")
+                            # Add movie
+                            print("Add movie")
                             bookDate["movies"].append(request.movie)
                             
-                            return booking_pb2.AddBookingReturnMessage(message = ADD_BOOKING_SUCCESS_MESSAGE)
+                            return booking_pb2.AddBookingReturnMessage(
+                                    code = STATUS_CODE_SUCCESS,
+                                    message = ADD_BOOKING_SUCCESS_MESSAGE
+                                )
                     
                     # Create Date
                     print("create date")
@@ -90,7 +108,10 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
                     }
                     currentBookingDates.append(info)
                     
-                    return booking_pb2.AddBookingReturnMessage(message = ADD_BOOKING_SUCCESS_MESSAGE)
+                    return booking_pb2.AddBookingReturnMessage(
+                            code = STATUS_CODE_SUCCESS,
+                            message = ADD_BOOKING_SUCCESS_MESSAGE
+                        )
                     
                     
                 else:
@@ -107,11 +128,17 @@ class BookingServicer(booking_pb2_grpc.BookingServicer):
                     }
                     self.db.append(info)
 
-                    return booking_pb2.AddBookingReturnMessage(message = ADD_BOOKING_SUCCESS_MESSAGE)
+                    return booking_pb2.AddBookingReturnMessage(
+                            code = STATUS_CODE_SUCCESS,
+                            message = ADD_BOOKING_SUCCESS_MESSAGE
+                        )
                     
             else:
-                #Le film n'est pas disponible à la date transmise
-                return booking_pb2.AddBookingReturnMessage(message = ADD_BOOKING_MOVIE_NOT_SCREENED_MESSAGE)
+                #The film is not available on the transmitted date
+                return booking_pb2.AddBookingReturnMessage(
+                        code = STATUS_CODE_ERROR,
+                        message = ADD_BOOKING_MOVIE_NOT_SCREENED_MESSAGE
+                    )
             
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

@@ -4,9 +4,12 @@ from concurrent import futures
 import showtime_pb2
 import showtime_pb2_grpc
 
+SHOWTIME_URI = '[::]:3002'
+SHOWTIME_DATABASE_PATH = '{}/databases/times.json'
+
 class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
     def __init__(self):
-        with open('{}/databases/times.json'.format("."), "r") as jsf:
+        with open(SHOWTIME_DATABASE_PATH.format("."), "r") as jsf:
             self.db = json.load(jsf)["schedule"]
     
     def GetMovieByDate(self, request, context):
@@ -26,7 +29,7 @@ class ShowtimeServicer(showtime_pb2_grpc.ShowtimeServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     showtime_pb2_grpc.add_ShowtimeServicer_to_server(ShowtimeServicer(), server)
-    server.add_insecure_port('[::]:3002')
+    server.add_insecure_port(SHOWTIME_URI)
     server.start()
     server.wait_for_termination()
 

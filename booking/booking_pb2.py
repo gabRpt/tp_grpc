@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\rbooking.proto\"\x0e\n\x0c\x45mptyMessage\"Y\n\x04\x42ook\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x1a\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\x0b.Book.Dates\x1a%\n\x05\x44\x61tes\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\x18\n\x06UserId\x12\x0e\n\x06userid\x18\x01 \x01(\t\":\n\x0bReservation\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\r\n\x05movie\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\"*\n\x17\x41\x64\x64\x42ookingReturnMessage\x12\x0f\n\x07message\x18\x01 \x01(\t2\x97\x01\n\x07\x42ooking\x12)\n\x0fGetListBookings\x12\r.EmptyMessage\x1a\x05.Book0\x01\x12+\n\x17GetListBookingsFromUser\x12\x07.UserId\x1a\x05.Book0\x01\x12\x34\n\nAddBooking\x12\x0c.Reservation\x1a\x18.AddBookingReturnMessageb\x06proto3'
+  serialized_pb=b'\n\rbooking.proto\"\x0e\n\x0c\x45mptyMessage\"Y\n\x04\x42ook\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\x1a\n\x05\x64\x61tes\x18\x02 \x03(\x0b\x32\x0b.Book.Dates\x1a%\n\x05\x44\x61tes\x12\x0c\n\x04\x64\x61te\x18\x01 \x01(\t\x12\x0e\n\x06movies\x18\x02 \x03(\t\"\x18\n\x06UserId\x12\x0e\n\x06userid\x18\x01 \x01(\t\":\n\x0bReservation\x12\x0e\n\x06userid\x18\x01 \x01(\t\x12\r\n\x05movie\x18\x02 \x01(\t\x12\x0c\n\x04\x64\x61te\x18\x03 \x01(\t\"8\n\x17\x41\x64\x64\x42ookingReturnMessage\x12\x0c\n\x04\x63ode\x18\x01 \x01(\x05\x12\x0f\n\x07message\x18\x02 \x01(\t2\x97\x01\n\x07\x42ooking\x12)\n\x0fGetListBookings\x12\r.EmptyMessage\x1a\x05.Book0\x01\x12+\n\x17GetListBookingsFromUser\x12\x07.UserId\x1a\x05.Book0\x01\x12\x34\n\nAddBooking\x12\x0c.Reservation\x1a\x18.AddBookingReturnMessageb\x06proto3'
 )
 
 
@@ -214,8 +214,15 @@ _ADDBOOKINGRETURNMESSAGE = _descriptor.Descriptor(
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='message', full_name='AddBookingReturnMessage.message', index=0,
-      number=1, type=9, cpp_type=9, label=1,
+      name='code', full_name='AddBookingReturnMessage.code', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='message', full_name='AddBookingReturnMessage.message', index=1,
+      number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -233,7 +240,7 @@ _ADDBOOKINGRETURNMESSAGE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=210,
-  serialized_end=252,
+  serialized_end=266,
 )
 
 _BOOK_DATES.containing_type = _BOOK
@@ -297,8 +304,8 @@ _BOOKING = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=255,
-  serialized_end=406,
+  serialized_start=269,
+  serialized_end=420,
   methods=[
   _descriptor.MethodDescriptor(
     name='GetListBookings',

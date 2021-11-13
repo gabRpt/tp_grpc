@@ -38,11 +38,13 @@ def showBookings():
 # Which User gonna see that movie
 @app.route("/user/<movieName>", methods=['GET'])
 def showUsersIDByMovieBooked(movieName):
+    # Get the movie by his title
      with grpc.insecure_channel('localhost:3001') as channel:
         stub = movie_pb2_grpc.MovieStub(channel)
         movieTitle = movie_pb2.MovieTitle(title=movieName)
         movieByTheTitle = stub.GetMovieByTitle(movieTitle)
-
+    
+    # Get all the bookings
      with grpc.insecure_channel('localhost:3003') as channel:
         stub = booking_pb2_grpc.BookingStub(channel)
         empty = booking_pb2.EmptyMessage()
@@ -51,7 +53,7 @@ def showUsersIDByMovieBooked(movieName):
         for book in listBookingsGRPC:
             bookings.append(book)
 
-     jsonResponse=[] # Variable qui stocke la réponse JSON soit les noms de deux qui ont une réservation pour le film
+     jsonResponse=[] # Variable that stores the JSON response of the names of those who have a reservation for the film
 
      for book in bookings:
         for date in book.dates:

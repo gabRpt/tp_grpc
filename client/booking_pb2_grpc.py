@@ -35,19 +35,23 @@ class BookingServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetListBookings(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get all bookings from database
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetListBookingsFromUser(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get All bookings from specified user
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def AddBooking(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Add booking in the database
+        Returns string message
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')

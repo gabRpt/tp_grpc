@@ -14,14 +14,19 @@ class MovieStub(object):
         Args:
             channel: A grpc.Channel.
         """
+        self.GetListMovies = channel.unary_stream(
+                '/Movie/GetListMovies',
+                request_serializer=movie__pb2.Empty.SerializeToString,
+                response_deserializer=movie__pb2.MovieData.FromString,
+                )
         self.GetMovieByID = channel.unary_unary(
                 '/Movie/GetMovieByID',
                 request_serializer=movie__pb2.MovieID.SerializeToString,
                 response_deserializer=movie__pb2.MovieData.FromString,
                 )
-        self.GetListMovies = channel.unary_stream(
-                '/Movie/GetListMovies',
-                request_serializer=movie__pb2.Empty.SerializeToString,
+        self.GetMovieByTitle = channel.unary_unary(
+                '/Movie/GetMovieByTitle',
+                request_serializer=movie__pb2.MovieTitle.SerializeToString,
                 response_deserializer=movie__pb2.MovieData.FromString,
                 )
         self.CreateMovie = channel.unary_unary(
@@ -34,11 +39,6 @@ class MovieStub(object):
                 request_serializer=movie__pb2.MovieID.SerializeToString,
                 response_deserializer=movie__pb2.Empty.FromString,
                 )
-        self.GetMovieByTitle = channel.unary_unary(
-                '/Movie/GetMovieByTitle',
-                request_serializer=movie__pb2.MovieTitle.SerializeToString,
-                response_deserializer=movie__pb2.MovieData.FromString,
-                )
         self.UpdateMovieRating = channel.unary_unary(
                 '/Movie/UpdateMovieRating',
                 request_serializer=movie__pb2.MovieData.SerializeToString,
@@ -49,38 +49,44 @@ class MovieStub(object):
 class MovieServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def GetMovieByID(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
     def GetListMovies(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get ALl movies from database
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def CreateMovie(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def DeleteMovie(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+    def GetMovieByID(self, request, context):
+        """Get movie informations with it's ID
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetMovieByTitle(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get movie informations with it's title
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CreateMovie(self, request, context):
+        """Add new movie
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DeleteMovie(self, request, context):
+        """Delete a movie by it's ID
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def UpdateMovieRating(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Update a movie
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -88,14 +94,19 @@ class MovieServicer(object):
 
 def add_MovieServicer_to_server(servicer, server):
     rpc_method_handlers = {
+            'GetListMovies': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetListMovies,
+                    request_deserializer=movie__pb2.Empty.FromString,
+                    response_serializer=movie__pb2.MovieData.SerializeToString,
+            ),
             'GetMovieByID': grpc.unary_unary_rpc_method_handler(
                     servicer.GetMovieByID,
                     request_deserializer=movie__pb2.MovieID.FromString,
                     response_serializer=movie__pb2.MovieData.SerializeToString,
             ),
-            'GetListMovies': grpc.unary_stream_rpc_method_handler(
-                    servicer.GetListMovies,
-                    request_deserializer=movie__pb2.Empty.FromString,
+            'GetMovieByTitle': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetMovieByTitle,
+                    request_deserializer=movie__pb2.MovieTitle.FromString,
                     response_serializer=movie__pb2.MovieData.SerializeToString,
             ),
             'CreateMovie': grpc.unary_unary_rpc_method_handler(
@@ -107,11 +118,6 @@ def add_MovieServicer_to_server(servicer, server):
                     servicer.DeleteMovie,
                     request_deserializer=movie__pb2.MovieID.FromString,
                     response_serializer=movie__pb2.Empty.SerializeToString,
-            ),
-            'GetMovieByTitle': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetMovieByTitle,
-                    request_deserializer=movie__pb2.MovieTitle.FromString,
-                    response_serializer=movie__pb2.MovieData.SerializeToString,
             ),
             'UpdateMovieRating': grpc.unary_unary_rpc_method_handler(
                     servicer.UpdateMovieRating,
@@ -127,6 +133,23 @@ def add_MovieServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class Movie(object):
     """Missing associated documentation comment in .proto file."""
+
+    @staticmethod
+    def GetListMovies(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/Movie/GetListMovies',
+            movie__pb2.Empty.SerializeToString,
+            movie__pb2.MovieData.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
     def GetMovieByID(request,
@@ -146,7 +169,7 @@ class Movie(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def GetListMovies(request,
+    def GetMovieByTitle(request,
             target,
             options=(),
             channel_credentials=None,
@@ -156,8 +179,8 @@ class Movie(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/Movie/GetListMovies',
-            movie__pb2.Empty.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/Movie/GetMovieByTitle',
+            movie__pb2.MovieTitle.SerializeToString,
             movie__pb2.MovieData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
@@ -193,23 +216,6 @@ class Movie(object):
         return grpc.experimental.unary_unary(request, target, '/Movie/DeleteMovie',
             movie__pb2.MovieID.SerializeToString,
             movie__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def GetMovieByTitle(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Movie/GetMovieByTitle',
-            movie__pb2.MovieTitle.SerializeToString,
-            movie__pb2.MovieData.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

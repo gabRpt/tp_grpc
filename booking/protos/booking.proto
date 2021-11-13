@@ -1,8 +1,14 @@
 syntax = "proto3";
 
 service Booking {
+  // Get all bookings from database
   rpc GetListBookings (EmptyMessage) returns (stream Book);
+
+  //Get All bookings from specified user
   rpc GetListBookingsFromUser (UserId) returns (stream Book);
+
+  //Add booking in the database
+  //Returns string message
   rpc AddBooking (Reservation) returns (AddBookingReturnMessage);
 }
 
@@ -29,5 +35,6 @@ message Reservation{
 }
 
 message AddBookingReturnMessage{
-  string message = 1;
+  int32 code = 1;
+  string message = 2;
 }

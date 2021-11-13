@@ -16,7 +16,7 @@ class ShowtimeStub(object):
         """
         self.GetListTimes = channel.unary_stream(
                 '/Showtime/GetListTimes',
-                request_serializer=showtime__pb2.Empty.SerializeToString,
+                request_serializer=showtime__pb2.EmptyMsg.SerializeToString,
                 response_deserializer=showtime__pb2.MoviesSchedules.FromString,
                 )
         self.GetMovieByDate = channel.unary_unary(
@@ -30,13 +30,15 @@ class ShowtimeServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetListTimes(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get all Times of broadcast of movies from database
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def GetMovieByDate(self, request, context):
-        """Missing associated documentation comment in .proto file."""
+        """Get a Movie by its broadcast date
+        """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -46,7 +48,7 @@ def add_ShowtimeServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetListTimes': grpc.unary_stream_rpc_method_handler(
                     servicer.GetListTimes,
-                    request_deserializer=showtime__pb2.Empty.FromString,
+                    request_deserializer=showtime__pb2.EmptyMsg.FromString,
                     response_serializer=showtime__pb2.MoviesSchedules.SerializeToString,
             ),
             'GetMovieByDate': grpc.unary_unary_rpc_method_handler(
@@ -76,7 +78,7 @@ class Showtime(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/Showtime/GetListTimes',
-            showtime__pb2.Empty.SerializeToString,
+            showtime__pb2.EmptyMsg.SerializeToString,
             showtime__pb2.MoviesSchedules.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
